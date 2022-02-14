@@ -2,7 +2,9 @@ import 'package:dart_scoresheet/data/player.dart';
 
 abstract class PlayerRepo {
   /// Throws [UserNameFoundException],[PlayerNotFoundException].
-  List<Player> registerPlayer(String username);
+  Player registerPlayer(String username);
+
+  Player removePlayer(String username);
 
   Player fetchPlayer(String username);
 }
@@ -10,15 +12,19 @@ abstract class PlayerRepo {
 class PlayerRepoImpl implements PlayerRepo {
   List<Player> storedPlayerList = [];
 
+  static const _maxPlayers = 4;
+
   @override
-  List<Player> registerPlayer(String username) {
+  Player registerPlayer(String username) {
+    if (storedPlayerList.length == _maxPlayers) throw ReachedLimitException();
     for (final p in storedPlayerList) {
       if (p.username == username) {
         throw UserNameFoundException();
       }
     }
-    storedPlayerList.add(Player(username: username));
-    return storedPlayerList;
+    final p = Player(username: username);
+    storedPlayerList.add(p);
+    return p;
   }
 
   @override
@@ -30,7 +36,23 @@ class PlayerRepoImpl implements PlayerRepo {
     }
     throw PlayerNotFoundException();
   }
+
+  @override
+  Player removePlayer(String username) {
+    Player? removedPlayer;
+    for (final p in storedPlayerList) {
+      if (p.username == username) {
+        removedPlayer = p;
+        break;
+      }
+    }
+    if (removedPlayer == null) throw PlayerNotFoundException();
+    storedPlayerList.remove(removedPlayer);
+    return removedPlayer;
+  }
 }
+
+class ReachedLimitException implements Exception {}
 
 class UserNameFoundException implements Exception {}
 

@@ -6,9 +6,13 @@ abstract class PlayerState {}
 class PlayerInitial extends PlayerState {}
 class PlayerLoading extends PlayerState {}
 
-class PlayerSuccess extends PlayerState {
-  final List<Player> players;
-  PlayerSuccess(this.players);
+class PlayerAddedSuccess extends PlayerState {
+  final Player player;
+  PlayerAddedSuccess(this.player);
+}
+class PlayerRemovedSuccess extends PlayerState {
+  final Player player;
+  PlayerRemovedSuccess(this.player);
 }
 
 class PlayerError extends PlayerState {

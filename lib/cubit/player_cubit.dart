@@ -13,9 +13,20 @@ class PlayerCubit extends Cubit<PlayerState> {
   void addPlayer(String username) {
     try {
       emit(PlayerLoading());
-      emit(PlayerSuccess(_playerRepo.registerPlayer(username)));
+      emit(PlayerAddedSuccess(_playerRepo.registerPlayer(username)));
     } on UserNameFoundException {
       emit(PlayerError("User is already exists."));
+    } on ReachedLimitException {
+      emit(PlayerError("You have reached the limit of new users"));
+    }
+  }
+
+  void removePlayer(String username) {
+    try {
+      emit(PlayerLoading());
+      emit(PlayerRemovedSuccess(_playerRepo.removePlayer(username)));
+    } on UserNameFoundException {
+      emit(PlayerError("User does not exist."));
     }
   }
 }
