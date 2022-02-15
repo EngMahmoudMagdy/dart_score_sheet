@@ -9,12 +9,16 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      home: BlocProvider(
-        create: (context) => PlayerCubit(PlayerRepoImpl()),
-        child: const RegisterPlayersPage(),
-      ),
-    );
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => PlayerCubit(PlayerRepoImpl()),
+            child: const RegisterPlayersPage(),
+          )
+        ],
+        child: const MaterialApp(
+          title: 'Material App',
+          home:RegisterPlayersPage(),
+        ));
   }
 }

@@ -63,7 +63,7 @@ class _RegisterPlayersPageState extends State<RegisterPlayersPage> {
             const SizedBox(
               height: 18,
             ),
-            buildStartButton()
+            buildStartButton(),
           ]),
         ));
   }
@@ -113,22 +113,16 @@ class _RegisterPlayersPageState extends State<RegisterPlayersPage> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    scaffoldState = ScaffoldMessenger.of(context);
-  }
-
-  late ScaffoldMessengerState scaffoldState;
-
   void showSnackBar(String s, {isError = false}) {
-    scaffoldState.removeCurrentSnackBar();
-    scaffoldState.showSnackBar(SnackBar(
-        backgroundColor: isError ? const Color(0xffad0000) : Colors.black,
-        content: Text(
-          s,
-          style: TextStyle(color: isError ? Colors.amberAccent : Colors.white),
-        )));
+    ScaffoldMessenger.of(context)
+      ..removeCurrentSnackBar()
+      ..showSnackBar(SnackBar(
+          backgroundColor: isError ? const Color(0xffad0000) : Colors.black,
+          content: Text(
+            s,
+            style:
+                TextStyle(color: isError ? Colors.amberAccent : Colors.white),
+          )));
   }
 
   Widget buildStartButton() {

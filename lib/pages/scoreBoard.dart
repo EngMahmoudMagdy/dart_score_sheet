@@ -10,6 +10,15 @@ class ScoreBoard extends StatefulWidget {
 class _ScoreBoardState extends State<ScoreBoard> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Score Board"),
+      ),
+      body: SingleChildScrollView(
+        child: Column(children: [
+
+        ]),
+      ),
+    );
   }
 }
