@@ -1,8 +1,9 @@
-import 'package:dart_scoresheet/cubit/player_cubit.dart';
-import 'package:dart_scoresheet/data/player.dart';
-import 'package:dart_scoresheet/pages/scoreBoard.dart';
+import 'package:dart_scoresheet/features/scoresheet/data/models/player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../cubit/player_cubit.dart';
+import 'scoreBoard.dart';
 
 class RegisterPlayersPage extends StatefulWidget {
   const RegisterPlayersPage({Key? key}) : super(key: key);
@@ -138,7 +139,7 @@ class _RegisterPlayersPageState extends State<RegisterPlayersPage> {
 
   navigateToScoreBoard() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const ScoreBoard()));
+        context, MaterialPageRoute(builder: (context) => ScoreBoard()));
   }
 }
 

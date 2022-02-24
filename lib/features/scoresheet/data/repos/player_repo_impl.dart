@@ -1,19 +1,18 @@
-import 'package:dart_scoresheet/data/player.dart';
-
-abstract class PlayerRepo {
-  /// Throws [UserNameFoundException],[PlayerNotFoundException].
-  Player registerPlayer(String username);
-
-  Player removePlayer(String username);
-
-  Player fetchPlayer(String username);
-}
+import 'package:dart_scoresheet/core/errors/exceptions.dart';
+import 'package:dart_scoresheet/core/errors/failures.dart';
+import 'package:dart_scoresheet/features/scoresheet/data/datasources/player_local_data_source.dart';
+import 'package:dart_scoresheet/features/scoresheet/data/models/player.dart';
+import 'package:dart_scoresheet/features/scoresheet/domain/repos/player_repo.dart';
+import 'package:dartz/dartz.dart';
 
 class PlayerRepoImpl implements PlayerRepo {
-  List<Player> storedPlayerList = [];
+  final PlayerLocalDataSource dataSource;
+
+  PlayerRepoImpl({required this.dataSource});
 
   static const _maxPlayers = 4;
 
+/*
   @override
   Player registerPlayer(String username) {
     if (storedPlayerList.length == _maxPlayers) throw ReachedLimitException();
@@ -22,7 +21,7 @@ class PlayerRepoImpl implements PlayerRepo {
         throw UserNameFoundException();
       }
     }
-    final p = Player(username: username);
+    final p = Player(username: username, totalScore: 0);
     storedPlayerList.add(p);
     return p;
   }
@@ -49,6 +48,16 @@ class PlayerRepoImpl implements PlayerRepo {
     if (removedPlayer == null) throw PlayerNotFoundException();
     storedPlayerList.remove(removedPlayer);
     return removedPlayer;
+  }*/
+
+  @override
+  Future<Either<Failure, List<Player>?>> fetchPlayers() async {
+    try {
+      final result = await dataSource.getPlayers();
+      return Right(result);
+    } on CacheException {
+      return Left(CacheFailure());
+    }
   }
 }
 

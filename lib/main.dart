@@ -1,8 +1,9 @@
-import 'package:dart_scoresheet/cubit/player_cubit.dart';
-import 'package:dart_scoresheet/data/repos/playerRepo.dart';
-import 'package:dart_scoresheet/pages/registerPlayersPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'features/scoresheet/data/repos/player_repo_impl.dart';
+import 'features/scoresheet/presentation/cubit/player_cubit.dart';
+import 'features/scoresheet/presentation/pages/registerPlayersPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         ],
         child: const MaterialApp(
           title: 'Material App',
-          home:RegisterPlayersPage(),
+          home: RegisterPlayersPage(),
         ));
   }
 }
